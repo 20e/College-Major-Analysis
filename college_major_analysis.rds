@@ -1,0 +1,34 @@
+# Mean
+aver_emp<-sum(college$perc_employed*college$total)/sum(college$total)
+aver_inc<-sum(college$p75th*college$total)/sum(college$total)
+
+# Standard Deviation
+sum_sq_emp<-0
+for(i in 1:nrow(college)) sum_sq_emp<-sum_sq_emp+(college$perc_employed[i]-aver_emp)^2*college$total[i]
+sd_emp<-sqrt(sum_sq_emp/sum(college$total))
+sum_sq_inc<-0
+for(i in 1:nrow(college)) sum_sq_inc<-sum_sq_inc+(college$p75th[i]-aver_inc)^2*college$total[i]
+sd_inc<-sqrt(sum_sq_inc/sum(college$total))
+
+# Bar
+bar_emp<-qnorm(.975,mean = aver_emp,sd=sd_emp,lower.tail = TRUE)
+bar_inc<-qnorm(.975,mean = aver_inc,sd=sd_inc,lower.tail = TRUE)
+
+# Compare
+for(i in 1:nrow(college)) {
+        if(college$perc_employed[i]>bar_emp)
+                over_emp<-over_emp+college$total[i]
+}
+rate_emp<-over_emp/sum(college$total)
+
+over_inc<-0
+for(i in 1:nrow(college)) {
+        if(college$p75th[i]>bar_inc)
+                over_inc<-over_inc+college$total[i]
+}
+rate_inc<-over_inc/sum(college$total)
+
+# Conclusion
+if (rate_emp>0.025) print("there is a significant association between college major category and employment") else print("there is no significant association between college major category and employment")
+if (rate_inc>0.025) print("there is a significant association between college major category and income") else print("there is no significant association between college major category and income")
+
