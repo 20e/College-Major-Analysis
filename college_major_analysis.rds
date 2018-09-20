@@ -32,3 +32,4 @@ rate_inc<-over_inc/sum(college$total)
 if (rate_emp>0.025) print("there is a significant association between college major category and employment") else print("there is no significant association between college major category and employment")
 if (rate_inc>0.025) print("there is a significant association between college major category and income") else print("there is no significant association between college major category and income")
 
+# 2018 09 20
